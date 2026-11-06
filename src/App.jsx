@@ -1,9 +1,8 @@
+
+import HomePage from "./stages/ST1_Home/HomePage";
+
 function App() {
-  return (
-    <h1 className="text-5xl font-bold text-red-500">
-      Hello Tailwind!
-    </h1>
-  );
+  return <HomePage />;
 }
 
-export default App;ru
+export default App;
