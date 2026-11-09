@@ -9,7 +9,12 @@ import {
 import CoffeeCart from "../CoffeeCart/CoffeeCart.jsx";
 import IntroBrand from "../IntroBrand/IntroBrand.jsx";
 
-function IntroScene() {
+// MỚI: Import nút START từ branch của bạn mình
+import Button from "../../../../components/ButtonStart";
+
+
+// MỚI: Nhận onStart từ HomePage.jsx
+function IntroScene({ onStart }) {
   const [arrived, setArrived] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -81,6 +86,38 @@ function IntroScene() {
           <CoffeeCart />
         </motion.div>
       </div>
+
+      {/* MỚI: NÚT START XUẤT HIỆN SAU KHI XE DỪNG */}
+      <AnimatePresence>
+        {arrived && (
+          <motion.div
+            key="start-button"
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{
+              delay: 0.6,
+              duration: 0.5,
+              ease: "easeOut",
+            }}
+            className="
+              absolute inset-x-0 bottom-[3%] z-30
+              flex justify-center px-4
+              sm:bottom-[4%]
+            "
+          >
+            <Button onClick={onStart} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <span className="sr-only" aria-live="polite">
         {arrived
