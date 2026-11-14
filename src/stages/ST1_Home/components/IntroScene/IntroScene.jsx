@@ -10,7 +10,7 @@ import CoffeeCart from "../CoffeeCart/CoffeeCart.jsx";
 import IntroBrand from "../IntroBrand/IntroBrand.jsx";
 
 // MỚI: Import nút START từ branch của bạn mình
-import Button from "../../../../components/ButtonStart";
+import Button from "../../../../components/ButtonStart/ButtonStart.jsx";
 
 
 // MỚI: Nhận onStart từ HomePage.jsx
