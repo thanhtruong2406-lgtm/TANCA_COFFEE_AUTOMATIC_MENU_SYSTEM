@@ -1,39 +1,150 @@
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
+// Import custom hook quản lý trạng thái Intro
 import useIntro from "./hooks/useIntro.js";
+
+// Các component thuộc ST1
 import IntroScene from "./components/IntroScene/IntroScene.jsx";
+import HomeBanner from "./components/HomeBanner/HomeBanner.jsx";
+
+// Các component dùng chung
 import PageFlipTransition from "../../components/PageTransition/PageFlipTransition.jsx";
-import HomeView from "./HomeView.jsx";
+import Header from "../../components/Header/Header.jsx";
+import ShoppingBasket from "../../components/ShoppingBasket/ShoppingBasket.jsx";
+
+// Trang ST2 - Menu
+import MenuPage from "../ST2_Menu/MenuPage.jsx";
+
+// Cấu hình animation khi chuyển giữa Home và Menu
+const pageTransition = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+  transition: {
+    duration: 0.35,
+    ease: "easeOut",
+  },
+};
 
 function HomePage() {
-  const { started, startExperience, replayIntro } = useIntro();
+  // Quản lý trạng thái hoàn thành Intro
+  const { started, startExperience } = useIntro();
 
+  // Quản lý trang đang được hiển thị
+  const [activePage, setActivePage] = useState("home");
+
+  // Quản lý trạng thái đóng/mở giỏ hàng
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
+
+  // Kiểm soát trạng thái lật trang sách
   const [flipping, setFlipping] = useState(false);
 
-  // Khi người dùng nhấn START
+  // =========================
+  // XỬ LÝ SỰ KIỆN
+  // =========================
+
+  // Chuyển đổi giữa trang Home và Menu
+  const goToPage = (page) => {
+    setActivePage(page);
+
+    // Đưa màn hình về đầu trang khi chuyển nội dung
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // Bắt đầu hiệu ứng lật sách khi nhấn START
   const handleStart = () => {
+    // Ngăn người dùng kích hoạt hiệu ứng nhiều lần
     if (flipping) return;
+
     setFlipping(true);
   };
 
-  // Chỉ chuyển hẳn sang Home sau khi lật xong
+  // Chỉ hoàn thành Intro khi hiệu ứng lật sách kết thúc
   const handleFlipComplete = () => {
     startExperience();
     setFlipping(false);
   };
 
-  // Khi đã hoàn tất Intro, hiển thị Home
+  // Mở giỏ hàng
+  const handleOpenBasket = () => {
+    setIsBasketOpen(true);
+  };
+
+  // Đóng giỏ hàng
+  const handleCloseBasket = () => {
+    setIsBasketOpen(false);
+  };
+
+  // =========================
+  // GIAO DIỆN CHÍNH
+  // =========================
+
+  // Dùng chung giao diện cho trang phía sau khi lật sách
+  // và giao diện chính sau khi hoàn thành Intro
+  const mainContent = (
+    <div className="relative min-h-screen w-full bg-beige">
+      {/* Header điều hướng giữa các trang */}
+      <Header
+        activePage={activePage}
+        onNavigate={goToPage}
+        onOpenBasket={handleOpenBasket}
+        basketCount={0}
+      />
+
+      {/* Hiển thị nội dung theo trang đang được chọn */}
+      <AnimatePresence mode="wait">
+        {activePage === "home" ? (
+          <motion.div
+            key="home"
+            {...pageTransition}
+          >
+            {/* Banner giới thiệu TANCA COFFEE */}
+            <HomeBanner
+              onExploreMenu={() => goToPage("menu")}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="menu"
+            {...pageTransition}
+          >
+            {/* ST2 - Danh sách đồ uống */}
+            <MenuPage />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Popup giỏ hàng */}
+      <ShoppingBasket
+        isOpen={isBasketOpen}
+        onClose={handleCloseBasket}
+      />
+    </div>
+  );
+
+  // =========================
+  // ĐIỀU PHỐI INTRO VÀ HOME
+  // =========================
+
+  // Nếu Intro đã hoàn thành, hiển thị giao diện chính
   if (started) {
-    return <HomeView onReplay={replayIntro} />;
+    return mainContent;
   }
 
+  // Nếu chưa hoàn thành Intro, sử dụng hiệu ứng lật sách
   return (
     <PageFlipTransition
       flipping={flipping}
       onComplete={handleFlipComplete}
-      currentPage={<IntroScene onStart={handleStart} />}
-      nextPage={<HomeView onReplay={replayIntro} />}
+      currentPage={
+        <IntroScene onStart={handleStart} />
+      }
+      nextPage={mainContent}
     />
   );
 }

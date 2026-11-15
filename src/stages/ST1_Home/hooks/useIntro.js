@@ -1,19 +1,17 @@
 import { useState } from "react";
 
-const STORAGE_KEY = "tanca-intro-completed";
+// Custom Hook quản lý trạng thái Intro
+function useIntro() {
+  // Luôn hiển thị Intro khi tải lại website
+  const [started, setStarted] = useState(false);
 
-export default function useIntro() {
-  const [started, setStarted] = useState(() => {
-    return sessionStorage.getItem(STORAGE_KEY) === "true";
-  });
-
+  // Chuyển sang Home sau khi hiệu ứng lật sách kết thúc
   const startExperience = () => {
-    sessionStorage.setItem(STORAGE_KEY, "true");
     setStarted(true);
   };
 
+  // Cho phép chạy lại Intro khi cần
   const replayIntro = () => {
-    sessionStorage.removeItem(STORAGE_KEY);
     setStarted(false);
   };
 
@@ -23,3 +21,5 @@ export default function useIntro() {
     replayIntro,
   };
 }
+
+export default useIntro;
