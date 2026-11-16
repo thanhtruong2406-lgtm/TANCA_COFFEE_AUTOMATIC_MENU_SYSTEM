@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Coffee } from "lucide-react";
 
 import shoppingBasketIcon from "../../assets/shoppingBasket.png";
 
@@ -23,10 +24,7 @@ function Header({ activePage, onNavigate, onOpenBasket, basketCount = 0 }) {
           {
             // logoImage
           }
-          <span
-            aria-hidden="true"
-            className="block h-9 w-9 shrink-0 rounded-full border border-dashed border-brown/30"
-          />
+          <Coffee size={34} strokeWidth={2} className="shrink-0" />
           <span className="flex flex-col items-start leading-none">
             <span className="text-lg font-bold tracking-[0.12em] sm:text-xl">
               TANCA

@@ -73,16 +73,23 @@ function ShoppingBasket({ isOpen, onClose, items = [], total = 0 }) {
                   Giỏ hàng chưa có sản phẩm nào
                 </p>
               ) : (
-                <ul className="flex flex-col gap-3">
+                <ul className="max-h-60 space-y-3 overflow-y-auto pr-1">
                   {items.map((item) => (
                     <li
                       key={item.id}
-                      className="flex items-center justify-between text-brown"
+                      className="flex items-start justify-between gap-3 rounded-xl bg-white/60 p-3 text-brown"
                     >
-                      <span>
-                        {item.name} x{item.quantity}
-                      </span>
-                      <span className="font-semibold">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-bold">
+                          {item.name} <span className="font-semibold">x{item.quantity}</span>
+                        </p>
+                        {item.details && (
+                          <p className="mt-0.5 text-xs text-brown/65">
+                            {item.details}
+                          </p>
+                        )}
+                      </div>
+                      <span className="shrink-0 text-sm font-bold">
                         {formatPrice(item.price * item.quantity)}
                       </span>
                     </li>

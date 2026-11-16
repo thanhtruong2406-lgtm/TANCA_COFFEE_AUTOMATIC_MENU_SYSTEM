@@ -38,6 +38,9 @@ function HomePage() {
   // Quản lý trạng thái đóng/mở giỏ hàng
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
+  // Quản lý danh sách món trong giỏ hàng
+  const [basketItems, setBasketItems] = useState([]);
+
   // Kiểm soát trạng thái lật trang sách
   const [flipping, setFlipping] = useState(false);
 
@@ -80,6 +83,28 @@ function HomePage() {
     setIsBasketOpen(false);
   };
 
+  // Thêm đồ uống đã tùy chỉnh vào giỏ hàng
+  const handleAddToCart = (newItem) => {
+    setBasketItems((prev) => {
+      const existingIndex = prev.findIndex((item) => item.id === newItem.id);
+      if (existingIndex > -1) {
+        const updated = [...prev];
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          quantity: updated[existingIndex].quantity + newItem.quantity,
+        };
+        return updated;
+      }
+      return [...prev, newItem];
+    });
+  };
+
+  const totalCount = basketItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = basketItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
   // =========================
   // GIAO DIỆN CHÍNH
   // =========================
@@ -93,7 +118,7 @@ function HomePage() {
         activePage={activePage}
         onNavigate={goToPage}
         onOpenBasket={handleOpenBasket}
-        basketCount={0}
+        basketCount={totalCount}
       />
 
       {/* Hiển thị nội dung theo trang đang được chọn */}
@@ -114,7 +139,7 @@ function HomePage() {
             {...pageTransition}
           >
             {/* ST2 - Danh sách đồ uống */}
-            <MenuPage />
+            <MenuPage onAddToCart={handleAddToCart} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -123,6 +148,8 @@ function HomePage() {
       <ShoppingBasket
         isOpen={isBasketOpen}
         onClose={handleCloseBasket}
+        items={basketItems}
+        total={totalAmount}
       />
     </div>
   );
