@@ -1,7 +1,7 @@
 function DrinkIngredients({ ingredients }) {
   return (
     <div className="border-b border-brown/15 py-4">
-      <h4 className="text-base font-bold text-brown sm:text-lg">
+      <h4 className="font-handwritten text-base font-bold text-brown sm:text-lg">
         Nguyên liệu
       </h4>
       <p className="mt-1.5 text-sm leading-relaxed text-brown/75 sm:text-base">

@@ -6,7 +6,8 @@ function CategoryBackground({ category }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-beige"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      style={{ backgroundColor: category.theme?.background || category.panelBg }}
     >
       <AnimatePresence>
         <motion.div

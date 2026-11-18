@@ -66,8 +66,9 @@ function useDrinkCustomization(drink) {
       "Tại chỗ";
 
     return {
-      id: `${drink.id}-${size}-${sweetness}-${ice}-${selectedToppings.join(",")}-${servingType}-${note.trim()}`,
+      id: `${drink.id}-${size}-${sweetness}-${ice}-${[...selectedToppings].sort().join(",")}-${servingType}-${note.trim()}`,
       drinkId: drink.id,
+      customization: { size, sweetness, ice, toppingIds: [...selectedToppings].sort(), servingType, note: note.trim() },
       name: `${drink.name} (${size})`,
       details: `${sweetness} ngọt • ${ice} • ${servingLabel}${
         toppingNames.length > 0 ? ` • +${toppingNames.join(", ")}` : ""

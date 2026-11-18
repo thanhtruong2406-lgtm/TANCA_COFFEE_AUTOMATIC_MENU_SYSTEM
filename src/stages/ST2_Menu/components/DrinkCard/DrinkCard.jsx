@@ -4,11 +4,12 @@ const formatPrice = (value) => `${value.toLocaleString("vi-VN")} đ`;
 
 function DrinkCard({ drink, accentColor = "#6B4F3A", isSelected, onSelect }) {
   return (
-    <motion.article
+    <motion.button
+      type="button"
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
-      onClick={() => onSelect(drink)}
-      className={`group flex cursor-pointer flex-col overflow-hidden rounded-3xl border bg-[#FFFBF4] shadow-md transition-all ${
+      onClick={(event) => onSelect?.(drink, event.currentTarget)}
+      className={`group flex text-left cursor-pointer flex-col overflow-hidden rounded-3xl border bg-[#FFFBF4] shadow-md transition-all ${
         isSelected
           ? "ring-2 shadow-xl"
           : "border-brown/15 hover:shadow-xl"
@@ -37,7 +38,7 @@ function DrinkCard({ drink, accentColor = "#6B4F3A", isSelected, onSelect }) {
 
       <div className="flex flex-1 flex-col justify-between p-5">
         <div>
-          <h3 className="text-lg font-bold text-brown group-hover:opacity-90">
+          <h3 className="font-handwritten text-lg font-bold text-brown group-hover:opacity-90">
             {drink.name}
           </h3>
           <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-brown/70">
@@ -60,7 +61,7 @@ function DrinkCard({ drink, accentColor = "#6B4F3A", isSelected, onSelect }) {
           </span>
         </div>
       </div>
-    </motion.article>
+    </motion.button>
   );
 }
 

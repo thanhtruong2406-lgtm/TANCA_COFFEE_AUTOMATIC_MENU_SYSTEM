@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 
@@ -16,6 +15,7 @@ function DrinkDetailPage({
   categoryDrinks = [],
   onSelectDrink,
   onBack,
+  backLabel,
   onAddToCart,
 }) {
   const {
@@ -35,13 +35,9 @@ function DrinkDetailPage({
     note,
     setNote,
     totalPrice,
-    resetCustomization,
     buildCartItem,
   } = useDrinkCustomization(drink);
 
-  useEffect(() => {
-    resetCustomization();
-  }, [drink?.id]);
 
   if (!drink) return null;
 
@@ -71,7 +67,7 @@ function DrinkDetailPage({
           className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-brown/20 bg-[#FFFBF4]/90 px-4 py-2 text-sm font-semibold text-brown shadow-sm transition-colors hover:bg-white"
         >
           <ArrowLeft size={16} />
-          <span>Quay lại danh mục {category?.name}</span>
+          <span>{backLabel || `Quay lại danh mục ${category?.name}`}</span>
         </button>
 
         {categoryDrinks.length > 1 && (
