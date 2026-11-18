@@ -10,10 +10,10 @@ export default {
         brown: "#6B4F3A",
       },
 
-      // Bổ sung font chữ viết tay dành cho tiêu đề Home
-      // Không ghi đè các font mặc định của Tailwind
+      // Bổ sung font chữ viết tay dành cho tiêu đề Home và font serif hỗ trợ đầy đủ tiếng Việt
       fontFamily: {
         handwritten: ['"Dancing Script"', "cursive"],
+        serif: ['"Lora"', '"Times New Roman"', "serif"],
       },
     },
   },
