@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 // Import custom hook quản lý trạng thái Intro
@@ -38,8 +38,23 @@ function HomePage() {
   // Quản lý trạng thái đóng/mở giỏ hàng
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
-  // Quản lý danh sách món trong giỏ hàng
-  const [basketItems, setBasketItems] = useState([]);
+  // Quản lý danh sách món trong giỏ hàng (đồng bộ với localStorage)
+  const [basketItems, setBasketItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem("tanca-basket-items");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("tanca-basket-items", JSON.stringify(basketItems));
+    } catch {
+      // Bỏ qua lỗi lưu trữ nếu trình duyệt chặn
+    }
+  }, [basketItems]);
 
   // Kiểm soát trạng thái lật trang sách
   const [flipping, setFlipping] = useState(false);
@@ -115,6 +130,36 @@ function HomePage() {
     setBasketItems((prev) => prev.filter((item) => item.id !== itemId));
   };
 
+  // Xóa toàn bộ giỏ hàng
+  const handleClearBasket = () => {
+    setBasketItems([]);
+  };
+
+  // Xử lý đặt hàng / thanh toán
+  const handleCheckout = ({ note, paymentMethod, paymentLabel }) => {
+    if (basketItems.length === 0) return null;
+
+    const orderCode = `#CF${Math.floor(1000 + Math.random() * 9000)}`;
+    const total = basketItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const newOrder = {
+      id: `${Date.now()}-${orderCode}`,
+      code: orderCode,
+      createdAt: new Date().toISOString(),
+      note,
+      paymentMethod,
+      paymentLabel,
+      items: basketItems,
+      total,
+    };
+
+    setBasketItems([]);
+    return newOrder;
+  };
+
   const totalCount = basketItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = basketItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -168,6 +213,8 @@ function HomePage() {
         total={totalAmount}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
+        onClearBasket={handleClearBasket}
+        onCheckout={handleCheckout}
       />
     </div>
   );
