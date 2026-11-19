@@ -99,6 +99,22 @@ function HomePage() {
     });
   };
 
+  // Tăng/giảm số lượng món trong giỏ hàng
+  const handleUpdateQuantity = (itemId, delta) => {
+    setBasketItems((prev) =>
+      prev.flatMap((item) => {
+        if (item.id !== itemId) return item;
+        const nextQty = item.quantity + delta;
+        return nextQty > 0 ? { ...item, quantity: nextQty } : [];
+      })
+    );
+  };
+
+  // Xóa món khỏi giỏ hàng
+  const handleRemoveItem = (itemId) => {
+    setBasketItems((prev) => prev.filter((item) => item.id !== itemId));
+  };
+
   const totalCount = basketItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = basketItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -150,6 +166,8 @@ function HomePage() {
         onClose={handleCloseBasket}
         items={basketItems}
         total={totalAmount}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
       />
     </div>
   );

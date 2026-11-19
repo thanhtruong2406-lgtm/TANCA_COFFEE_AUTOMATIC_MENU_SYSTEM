@@ -1,10 +1,17 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { X } from "lucide-react";
+import { X, Plus, Minus, Trash2 } from "lucide-react";
 
 const formatPrice = (value) => `${value.toLocaleString("vi-VN")} đ`;
 
-function ShoppingBasket({ isOpen, onClose, items = [], total = 0 }) {
+function ShoppingBasket({
+  isOpen,
+  onClose,
+  items = [],
+  total = 0,
+  onUpdateQuantity,
+  onRemoveItem,
+}) {
   useEffect(() => {
     if (!isOpen) return undefined;
 
@@ -73,25 +80,61 @@ function ShoppingBasket({ isOpen, onClose, items = [], total = 0 }) {
                   Giỏ hàng chưa có sản phẩm nào
                 </p>
               ) : (
-                <ul className="max-h-60 space-y-3 overflow-y-auto pr-1">
+                <ul className="max-h-72 space-y-3 overflow-y-auto pr-1">
                   {items.map((item) => (
                     <li
                       key={item.id}
-                      className="flex items-start justify-between gap-3 rounded-xl bg-white/60 p-3 text-brown"
+                      className="flex flex-col gap-2.5 rounded-xl bg-white/70 p-3.5 text-brown shadow-sm"
                     >
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-bold">
-                          {item.name} <span className="font-semibold">x{item.quantity}</span>
-                        </p>
-                        {item.details && (
-                          <p className="mt-0.5 text-xs text-brown/65">
-                            {item.details}
-                          </p>
-                        )}
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-bold">{item.name}</p>
+                          {item.details && (
+                            <p className="mt-0.5 text-xs text-brown/65">
+                              {item.details}
+                            </p>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => onRemoveItem?.(item.id)}
+                          aria-label={`Xóa ${item.name} khỏi giỏ hàng`}
+                          title="Xóa món"
+                          className="flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-full text-brown/50 transition-colors hover:bg-red-50 hover:text-red-600"
+                        >
+                          <Trash2 size={15} />
+                        </button>
                       </div>
-                      <span className="shrink-0 text-sm font-bold">
-                        {formatPrice(item.price * item.quantity)}
-                      </span>
+
+                      <div className="flex items-center justify-between border-t border-brown/10 pt-2">
+                        <div className="flex items-center gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => onUpdateQuantity?.(item.id, -1)}
+                            disabled={item.quantity <= 1}
+                            aria-label={`Giảm số lượng ${item.name}`}
+                            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-brown/25 bg-white text-brown transition-colors hover:bg-brown/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+                          >
+                            <Minus size={13} />
+                          </button>
+                          <span className="min-w-5 text-center text-sm font-bold">
+                            {item.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => onUpdateQuantity?.(item.id, 1)}
+                            aria-label={`Tăng số lượng ${item.name}`}
+                            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-brown/25 bg-white text-brown transition-colors hover:bg-brown/10"
+                          >
+                            <Plus size={13} />
+                          </button>
+                        </div>
+
+                        <span className="text-sm font-bold">
+                          {formatPrice(item.price * item.quantity)}
+                        </span>
+                      </div>
                     </li>
                   ))}
                 </ul>
