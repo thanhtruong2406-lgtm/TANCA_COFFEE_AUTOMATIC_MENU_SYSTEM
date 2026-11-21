@@ -8,6 +8,7 @@ import {
   Citrus,
   Sprout,
   Flame,
+  CakeSlice,
 } from "lucide-react";
 
 // Icon của từng danh mục
@@ -17,6 +18,7 @@ const categoryIcons = {
   "fruit-tea": Citrus,
   detox: Sprout,
   "hot-trend": Flame,
+  bakery: CakeSlice,
 };
 
 function ZoomTransition({

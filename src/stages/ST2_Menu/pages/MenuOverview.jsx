@@ -58,7 +58,7 @@ function MenuOverview({
               lg:text-4xl
             "
           >
-            Hôm nay bạn muốn uống gì?
+            Hôm nay bạn muốn dùng gì?
           </h2>
 
           {/* Truyền sự kiện chọn danh mục */}

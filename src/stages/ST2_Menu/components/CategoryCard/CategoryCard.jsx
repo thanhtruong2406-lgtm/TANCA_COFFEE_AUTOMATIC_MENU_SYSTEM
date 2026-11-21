@@ -1,4 +1,4 @@
-import { Coffee, Leaf, Citrus, Sprout, Flame } from "lucide-react";
+import { Coffee, Leaf, Citrus, Sprout, Flame, CakeSlice } from "lucide-react";
 
 // Icon tương ứng với từng danh mục
 const categoryIcons = {
@@ -7,6 +7,7 @@ const categoryIcons = {
   "fruit-tea": Citrus,
   detox: Sprout,
   "hot-trend": Flame,
+  bakery: CakeSlice,
 };
 
 // Màu nền riêng của mỗi nút
@@ -16,6 +17,7 @@ const categoryColors = {
   "fruit-tea": "#EAC19B",
   detox: "#C1D4C1",
   "hot-trend": "#E8C0C1",
+  bakery: "#EEDAB5",
 };
 
 function CategoryCard({ category, onClick }) {

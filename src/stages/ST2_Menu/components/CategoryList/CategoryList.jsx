@@ -6,10 +6,11 @@ function CategoryList({ onSelectCategory }) {
     <div
       className="
         mx-auto grid
-        w-full max-w-[739px]
+        w-full max-w-[890px]
 
         grid-cols-2
-        sm:grid-cols-5
+        sm:grid-cols-3
+        lg:grid-cols-6
 
         gap-3 lg:gap-4
 

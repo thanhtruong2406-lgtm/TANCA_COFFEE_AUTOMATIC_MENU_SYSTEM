@@ -1,12 +1,8 @@
-// Dữ liệu chung của 5 danh mục đồ uống
+// Dữ liệu chung của 6 danh mục menu
 const categories = [
   {
     id: "coffee",
     name: "Cà phê",
-    title: "Coffee Collection",
-    japanese: "珈琲",
-    image: "/images/ST2/categories/coffee.webp",
-    background: "/images/ST2/backgrounds/coffee.webp",
     theme: {
       primary: "#795039",
       secondary: "#BA906A",
@@ -17,10 +13,6 @@ const categories = [
   {
     id: "matcha",
     name: "Matcha",
-    title: "Matcha Collection",
-    japanese: "抹茶",
-    image: "/images/ST2/categories/matcha.webp",
-    background: "/images/ST2/backgrounds/matcha.webp",
     theme: {
       primary: "#64733E",
       secondary: "#A9B88C",
@@ -31,10 +23,6 @@ const categories = [
   {
     id: "fruit-tea",
     name: "Trà trái cây",
-    title: "Fruit Tea Collection",
-    japanese: "果実茶",
-    image: "/images/ST2/categories/fruit-tea.webp",
-    background: "/images/ST2/backgrounds/fruit-tea.webp",
     theme: {
       primary: "#D99554",
       secondary: "#F2C6A0",
@@ -45,10 +33,6 @@ const categories = [
   {
     id: "detox",
     name: "Detox",
-    title: "Detox Collection",
-    japanese: "自然",
-    image: "/images/ST2/categories/detox.webp",
-    background: "/images/ST2/backgrounds/detox.webp",
     theme: {
       primary: "#547C65",
       secondary: "#83AA91",
@@ -59,15 +43,21 @@ const categories = [
   {
     id: "hot-trend",
     name: "Hot Trend",
-    title: "Trending Collection",
-    japanese: "人気",
-    image: "/images/ST2/categories/hot-trend.webp",
-    background: "/images/ST2/backgrounds/hot-trend.webp",
     theme: {
       primary: "#A65E63",
       secondary: "#D59599",
       background: "#F9EAE6",
       text: "#85474C",
+    },
+  },
+  {
+    id: "bakery",
+    name: "Bánh",
+    theme: {
+      primary: "#B87333",
+      secondary: "#E2B887",
+      background: "#F5E1BE",
+      text: "#6B4423",
     },
   },
 ];
