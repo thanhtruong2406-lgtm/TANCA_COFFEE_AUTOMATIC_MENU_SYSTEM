@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X, Plus, Minus, Trash2, CheckCircle2 } from "lucide-react";
-
+import PaymentQR from "../../stages/ST2_Menu/components/ShoppingBasket/PaymentQR.jsx";
 const formatPrice = (value) => `${value.toLocaleString("vi-VN")} đ`;
 
 const PAYMENT_METHODS = [
@@ -295,9 +295,11 @@ function ShoppingBasket({
                     className="w-full rounded-xl border border-brown/20 bg-white/80 px-3.5 py-2 text-xs text-brown outline-none focus:border-brown sm:text-sm"
                   />
 
+                  {/* Hai nút lựa chọn thanh toán */}
                   <div className="grid grid-cols-2 gap-2">
                     {PAYMENT_METHODS.map((method) => {
                       const active = paymentMethod === method.id;
+
                       return (
                         <button
                           key={method.id}
@@ -314,6 +316,11 @@ function ShoppingBasket({
                       );
                     })}
                   </div>
+
+                  {/* Mã QR xuất hiện ngay bên dưới hai nút */}
+                  {paymentMethod === "qr" && !isEmpty && (
+                    <PaymentQR amount={total} />
+                  )}
                 </div>
               )}
 
