@@ -19,6 +19,7 @@ function DrinkDetailPage({
   onAddToCart,
 }) {
   const {
+    isBakery,
     size,
     setSize,
     sweetness,
@@ -27,6 +28,10 @@ function DrinkDetailPage({
     setIce,
     selectedToppings,
     toggleTopping,
+    selectedFilling,
+    setSelectedFilling,
+    utensil,
+    setUtensil,
     servingType,
     setServingType,
     quantity,
@@ -34,6 +39,7 @@ function DrinkDetailPage({
     decreaseQuantity,
     note,
     setNote,
+    activeImage,
     totalPrice,
     buildCartItem,
   } = useDrinkCustomization(drink);
@@ -103,7 +109,12 @@ function DrinkDetailPage({
       >
         {/* CỘT TRÁI: HÌNH ẢNH MÓN */}
         <div className="flex lg:col-span-5">
-          <DrinkImage drink={drink} panelBg={panelBg} />
+          <DrinkImage
+            drink={drink}
+            panelBg={panelBg}
+            activeImage={activeImage}
+            slideImages={drink.slideImages}
+          />
         </div>
 
         {/* CỘT PHẢI: CÂU CHUYỆN, NGUYÊN LIỆU & TÙY CHỌN */}
@@ -113,6 +124,13 @@ function DrinkDetailPage({
             <DrinkIngredients ingredients={drink.ingredients} />
 
             <DrinkOptions
+              isBakery={isBakery}
+              servingTemp={drink.servingTemp}
+              fillings={drink.fillings}
+              selectedFilling={selectedFilling}
+              onSelectFilling={setSelectedFilling}
+              utensil={utensil}
+              onSelectUtensil={setUtensil}
               size={size}
               onSelectSize={setSize}
               sweetness={sweetness}

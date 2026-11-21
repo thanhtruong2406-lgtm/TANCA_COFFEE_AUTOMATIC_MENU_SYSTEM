@@ -18,12 +18,6 @@ function CategoryBackground({ category }) {
           transition={{ duration: 0.25, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          <img
-            src={category.background}
-            alt=""
-            draggable={false}
-            className="h-full w-full select-none object-cover opacity-30 blur-xl"
-          />
           <div
             className="absolute inset-0"
             style={{
